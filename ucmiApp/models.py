@@ -3,12 +3,13 @@ from django.db import models
 
 
 class Form(models.Model):
-    Fullname = models.CharField(max_length=255)
-    Emailaddress = models.EmailField()
-    Phonenumber = models.CharField(max_length=255)
-    Formtype = models.CharField(max_length=255)
-    Message = models.TextField()
+    fullname = models.CharField(max_length=255)
+    emailaddress = models.EmailField()
+    phonenumber = models.CharField(max_length=255)
+    formtype = models.CharField(max_length=255)
+    message = models.TextField()
 
 
 class Subscription(models.Model):
-    subscription = models.CharField(max_length=255)
+    emailaddress = models.EmailField()
+    subscription = models.BooleanField(default=False)
