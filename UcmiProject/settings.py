@@ -14,6 +14,13 @@ from pathlib import Path
 import django_heroku
 import dj_database_url
 from decouple import config
+import environ
+import os
+# Environment vatiables
+env = environ.Env()
+environ.Env.read_env()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ucmiApp.apps.UcmiappConfig',
     'rest_framework',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +140,27 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
+
+
+# Bottom of settings.py
+# # Twilio SendGrid
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'  # Name for all the SenGrid accounts
+# EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY')
+# EMAIL_FORM_USER = os.environ.get('EMAIL_FORM_USER')
+# #Email conf
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = "akotobamfo.eab@gmail.com"
+EMAIL_HOST_PASSWORD = "bcenpegtoyshatis"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+# The email you'll be sending emails from
+#DEFAULT_FROM_EMAIL = 'akotobamfo.eab@gmail.com'
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

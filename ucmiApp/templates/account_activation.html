@@ -1,0 +1,7 @@
+
+Hey {{ user.fullname }}
+
+    We noticed you just sign up on our website
+       Please confirm your email address and activate your account
+
+   http://{{ domain }}{% url 'ucmiAppUrls:activate' uid64=uid token=token %}
