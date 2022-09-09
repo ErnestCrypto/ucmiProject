@@ -18,8 +18,7 @@ from.models import Form, Subscription
 
 def sendActivationEmail(email_person, request):
     try:
-        user = Form.objects.get(emailaddress=email_person)
-
+        user = Subscription.objects.get(emailaddress=email_person)
     except Exception as e:
         user = None
     current_site = get_current_site(request)
@@ -27,7 +26,6 @@ def sendActivationEmail(email_person, request):
     email_body = render_to_string(
         'account_activation.html',
         {
-            'user': user,
             'domain': current_site.domain,
             'uid': user.id,
             'token': token_generator.make_token(user),
@@ -42,7 +40,7 @@ def sendActivationEmail(email_person, request):
 def activate_user(request, uid64, token):
     try:
         uid = uid64
-        user = Form.objects.get(id=uid)
+        user = Subscription.objects.get(id=uid)
     except Exception as e:
         user = None
     if user or token_generator.check_token(user, token):
@@ -64,8 +62,8 @@ def subscriptionList(request):
         if serializer.is_valid():
             data = serializer.validated_data
             email = data.get('emailaddress')
-            sendActivationEmail(email, request)
             serializer.save()
+            sendActivationEmail(email, request)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
