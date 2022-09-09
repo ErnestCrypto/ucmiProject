@@ -45,7 +45,6 @@ def activate_user(request, uid64, token):
         user = None
     if user or token_generator.check_token(user, token):
         user.subscription = "True"
-
         user.save()
         return render(request, 'account.html')
     else:
