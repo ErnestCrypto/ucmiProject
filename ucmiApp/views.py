@@ -44,8 +44,9 @@ def activate_user(request, uid64, token):
     except Exception as e:
         user = None
     if user or token_generator.check_token(user, token):
-        sub = Subscription(subscription="True", emailaddress=user.emailaddress)
-        sub.save()
+        user.subscription = "True"
+
+        user.save()
         return render(request, 'account.html')
     else:
         return render(request, 'activate_failed.html')
