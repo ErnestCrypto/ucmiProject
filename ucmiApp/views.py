@@ -17,11 +17,13 @@ from.models import Form, Subscription
 
 
 def sendActivationEmail(email_person, request):
+    messages.success(request, email_person)
     try:
-        user = Subscription.objects.get(emailaddress=email_person)
+        user = Subscription.objects.filter(emailaddress=email_person).first()
     except Exception as e:
         user = None
     current_site = get_current_site(request)
+
     email_subject = 'Activate Your Account'
     email_body = render_to_string(
         'account_activation.html',
@@ -31,7 +33,7 @@ def sendActivationEmail(email_person, request):
             'token': token_generator.make_token(user),
         }
     )
-    email = EmailMessage(subject=email_subject, body=email_body, from_email=settings.EMAIL_HOST_USER,
+    email = EmailMessage(subject="Activate Your Account", body=email_body, from_email=settings.EMAIL_HOST_USER,
                          to={user.emailaddress}
                          )
     email.send()
